@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velocity Motors</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background: #07080c;
+    color: white;
+}
+/* NAVBAR */
+nav {
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6%;
+    background: rgba(7,8,12,.85);
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #191b23;
+}
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+.logo span {
+    color: #ff3b30;
+}
+nav a {
+    color: #aaa;
+    text-decoration: none;
+    margin-left: 28px;
+    transition: .3s;
+}
+nav a:hover {
+    color: white;
+}
+/* HERO */
+.hero {
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    padding: 70px 7%;
+    background:
+        linear-gradient(90deg, #07080c 15%, rgba(7,8,12,.65), rgba(7,8,12,.1)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2000&q=85");
+    background-size: cover;
+    background-position: center;
+}
+.hero-content {
+    max-width: 650px;
+}
+.hero h1 {
+    font-size: clamp(45px, 7vw, 85px);
+    line-height: .95;
+    margin-bottom: 25px;
+}
+.hero h1 span {
+    color: #ff3b30;
+}
+.hero p {
+    color: #bbb;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+.hero button {
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    background: #ff3b30;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 15px;
+    transition: .3s;
+}
+.hero button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255,59,48,.3);
+}
+/* SEARCH */
+.controls {
+    padding: 45px 7% 10px;
+}
+.search-box {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.search-box input,
+.search-box select {
+    background: #11131a;
+    border: 1px solid #252834;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    outline: none;
+}
+.search-box input {
+    flex: 1;
+    min-width: 220px;
+}
+.search-box select {
+    min-width: 160px;
+}
+.search-box input:focus,
+.search-box select:focus {
+    border-color: #ff3b30;
+}
+/* SECTION */
+section {
+    padding: 35px 7%;
+}
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.section-title h2 {
+    font-size: 30px;
+}
+.count {
+    color: #888;
+}
+/* CAR GRID */
+.car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 22px;
+}
+.car {
+    background: #101219;
+    border: 1px solid #1e212b;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: .35s;
+    position: relative;
+}
+.car:hover {
+    transform: translateY(-8px);
+    border-color: #ff3b30;
+    box-shadow: 0 15px 40px rgba(0,0,0,.45);
+}
+.car-img {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+.car-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s;
+}
+.car:hover img {
+    transform: scale(1.08);
+}
+.favorite {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,.65);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 2;
+}
+.favorite.active {
+    color: #ff3b30;
+}
+.car-info {
+    padding: 18px;
+}
+.car-info h3 {
+    font-size: 20px;
+    margin-bottom: 7px;
+}
+.car-info p {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.price {
+    font-size: 19px;
+    font-weight: 800;
+}
+.details {
+    padding: 9px 13px;
+    border-radius: 8px;
+    border: 1px solid #30333d;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+}
+.details:hover {
+    background: #ff3b30;
+    border-color: #ff3b30;
+}
+/* FOOTER */
+footer {
+    margin-top: 60px;
+    padding: 40px 7%;
+    border-top: 1px solid #191b23;
+    color: #777;
+    text-align: center;
+}
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.8);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+.modal-box {
+    max-width: 600px;
+    width: 100%;
+    background: #11131a;
+    border: 1px solid #292c37;
+    border-radius: 20px;
+    padding: 25px;
+    position: relative;
+}
+.modal-box img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 2;
+}
+/* MOBILE */
+@media(max-width:700px) {
+    nav {
+        padding: 0 5%;
+    }
+    nav a {
+        display: none;
+    }
+    .hero {
+        min-height: 550px;
+        padding: 50px 7%;
+    }
+    .hero h1 {
+        font-size: 52px;
+    }
+    section {
+        padding: 30px 5%;
+    }
+    .car-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+<body>
+<nav>
+    <div class="logo">VELOCITY<span>.</span></div>
+    <div>
+        <a href="#cars">Cars</a>
+        <a href="#favorites">Favorites</a>
+        <a href="#about">About</a>
+    </div>
+</nav>
+<header class="hero">
+    <div class="hero-content">
+        <h1>FIND YOUR <span>DREAM CAR.</span></h1>
+        <p>
+            Explore a collection of supercars, sports cars,
+            luxury vehicles and daily drivers.
+        </p>
+        <button onclick="document.getElementById('cars').scrollIntoView({behavior:'smooth'})">
+            Explore Cars →
+        </button>
+    </div>
+</header>
+<div class="controls">
+    <div class="search-box">
+        <input id="search" type="text" placeholder="🔍 Search cars...">
+        <select id="brand">
+            <option value="all">All Brands</option>
+            <option>BMW</option>
+            <option>Mercedes</option>
+            <option>Porsche</option>
+            <option>Lamborghini</option>
+            <option>Ferrari</option>
+            <option>Nissan</option>
+            <option>Toyota</option>
+            <option>Ford</option>
+            <option>Audi</option>
+        </select>
+        <select id="type">
+            <option value="all">All Types</option>
+            <option>Supercar</option>
+            <option>Sports</option>
+            <option>Luxury</option>
+            <option>Muscle</option>
+            <option>JDM</option>
+        </select>
+    </div>
+</div>
+<section id="cars">
+    <div class="section-title">
+        <h2>Featured Cars</h2>
+        <div class="count" id="count">12 cars</div>
+    </div>
+    <div class="car-grid" id="carGrid"></div>
+</section>
+<footer id="about">
+    <h3>VELOCITY.</h3>
+    <br>
+    Built for people who love cars. 🏎️
+</footer>
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <div class="close" onclick="closeModal()">×</div>
+        <img id="modalImg">
+        <h2 id="modalTitle"></h2>
+        <br>
+        <p id="modalText"></p>
+    </div>
+</div>
+<script>
+const cars = [
+{
+    name:"Lamborghini Huracán",
+    brand:"Lamborghini",
+    type:"Supercar",
+    price:"$249,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Ferrari 488",
+    brand:"Ferrari",
+    type:"Supercar",
+    price:"$330,000",
+    year:"2023",
+    image:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Porsche 911 GT3",
+    brand:"Porsche",
+    type:"Sports",
+    price:"$185,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"BMW M4 Competition",
+    brand:"BMW",
+    type:"Sports",
+    price:"$82,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Mercedes AMG GT",
+    brand:"Mercedes",
+    type:"Luxury",
+    price:"$136,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Nissan GT-R",
+    brand:"Nissan",
+    type:"JDM",
+    price:"$122,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1614200179396-2bdb77ebf81b?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Toyota Supra",
+    brand:"Toyota",
+    type:"JDM",
+    price:"$58,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1625047509248-ec889cbff17f?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Ford Mustang GT",
+    brand:"Ford",
+    type:"Muscle",
+    price:"$45,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Audi R8",
+    brand:"Audi",
+    type:"Supercar",
+    price:"$210,000",
+    year:"2023",
+    image:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"BMW M5",
+    brand:"BMW",
+    type:"Luxury",
+    price:"$115,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1523983388277-336a66bf9bcd?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Porsche Taycan",
+    brand:"Porsche",
+    type:"Luxury",
+    price:"$99,000",
+    year:"2024",
+    image:"https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=900&q=80"
+},
+{
+    name:"Lamborghini Aventador",
+    brand:"Lamborghini",
+    type:"Supercar",
+    price:"$500,000",
+    year:"2022",
+    image:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80"
+}
+];
+const grid = document.getElementById("carGrid");
+const search = document.getElementById("search");
+const brand = document.getElementById("brand");
+const type = document.getElementById("type");
+const count = document.getElementById("count");
+function displayCars() {
+    const searchValue = search.value.toLowerCase();
+    const brandValue = brand.value;
+    const typeValue = type.value;
+    const filtered = cars.filter(car => {
+        const matchesSearch =
+            car.name.toLowerCase().includes(searchValue) ||
+            car.brand.toLowerCase().includes(searchValue);
+        const matchesBrand =
+            brandValue === "all" || car.brand === brandValue;
+        const matchesType =
+            typeValue === "all" || car.type === typeValue;
+        return matchesSearch && matchesBrand && matchesType;
+    });
+    grid.innerHTML = "";
+    count.textContent = filtered.length + " cars";
+    filtered.forEach((car, index) => {
+        const card = document.createElement("div");
+        card.className = "car";
+        card.innerHTML = `
+            <div class="car-img">
+                <img src="${car.image}" alt="${car.name}">
+                <button class="favorite" onclick="favorite(this)">♡</button>
+            </div>
+            <div class="car-info">
+                <h3>${car.name}</h3>
+                <p>
+                    ${car.year} • ${car.brand} • ${car.type}
+                </p>
+                <div class="bottom">
+                    <div class="price">${car.price}</div>
+                    <button class="details"
+                        onclick='openModal(${JSON.stringify(car)})'>
+                        Details
+                    </button>
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+function favorite(button) {
+    button.classList.toggle("active");
+    if(button.classList.contains("active")) {
+        button.textContent = "♥";
+    } else {
+        button.textContent = "♡";
+    }
+}
+function openModal(car) {
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modalImg").src = car.image;
+    document.getElementById("modalTitle").textContent =
+        car.name;
+    document.getElementById("modalText").textContent =
+        `${car.year} ${car.brand} ${car.type} — Starting around ${car.price}.`;
+}
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+window.onclick = function(event) {
+    const modal = document.getElementById("modal");
+    if(event.target === modal) {
+        closeModal();
+    }
+}
+search.addEventListener("input", displayCars);
+brand.addEventListener("change", displayCars);
+type.addEventListener("change", displayCars);
+displayCars();
+</script>
+</body>
+</html>
